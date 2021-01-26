@@ -15,8 +15,9 @@ public class OOP_Lab3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //ex1();
-        ex2();
+       // ex1();
+        //ex2();
+        ex3();
     }
     //**********************************************************************
     public static void ex1 (){
@@ -57,105 +58,197 @@ public class OOP_Lab3 {
                 reversedNum *= 10;
             }
         }
-        if (curNum == reversedNum)
+        if(curNum == reversedNum){
             return true;
-        else
+        }
+        else{
             return false;
+        }
     }
     //**********************************************************************
     public static void ex2() {
-		String[] strList1;
-		String[] strList2;
-		int[] intList1;
-		int[] intList2;
+        int[] list1 = new int[5];
+        int[] list2 = new int[4];
 		
-		list1:
-		while(true) {
-			System.out.print("Enter list1 : ");
-			Scanner inputList1 = new Scanner(System.in);
-			try {
-				strList1 = inputList1.nextLine().trim().split(" ");
-				intList1 = processStrToInt(strList1);
-				break;
-			}
-			catch (IllegalArgumentException error){	
-				System.out.println(error);
-				continue list1;
-			}
-		}
+        for(int i=0;i<5;i++){
+            list1[i] = (int)(Math.random()*100);
+        }
+        System.out.print("List 1 is ");
+	for (int num: list1) {
+            System.out.print(num + " ");
+	}
+        System.out.print("\n");
+        
+        for(int i=0;i<4;i++){
+            list2[i] = (int)(Math.random()*100);
+        }
+        System.out.print("List 2 is ");
+	for (int num: list2) {
+            System.out.print(num + " ");
+	}
+        System.out.print("\n");  
+        
+	int[] mergedList = mergeSortedArrays(list1, list2);
 		
-		Arrays.sort(intList1);
-		
-		list2:
-		while(true) {
-			System.out.print("Enter list2 : ");
-			Scanner inputList2 = new Scanner(System.in);
-			try {
-				strList2 = inputList2.nextLine().trim().split(" ");
-				intList2 = processStrToInt(strList2);
-				break;
-			}
-			catch (IllegalArgumentException error){	
-				System.out.println(error);
-				continue list2;
-			}
-		}
-		
-		Arrays.sort(intList2);
+	System.out.print("The merged list is ");
+	for (int num: mergedList) {
+            System.out.print(num + " ");
+	}
+	System.out.print("\n");
+    }
+    public static int[] mergeSortedArrays(int[] arr1, int[] arr2) {
+        int n1 = arr1.length;
+        int n2 = arr2.length;
+        int[] merge = new int[n1 + n2];
+            
+        System.arraycopy(arr1, 0, merge, 0, n1);
+        System.arraycopy(arr2, 0, merge, n1, n2);
+        Arrays.sort(merge);
+        return merge;
+    }
+    //**********************************************************************
+    public static void ex3() {
+	int size = 0;
+        System.out.print("Enter the size for the matrix: ");
+        Scanner inputSize = new Scanner(System.in);		
+	size = inputSize.nextInt();
 
-		int[] mergedList = mergeSortedArrays(intList1, intList2);
-		
-		printArr(mergedList);
-	}
+	int[][] matrix = randomMatrix(size);
+	printMatrix(matrix);
+        checkRowAllSame(matrix);
+	checkColumnAllSame(matrix);
+	checkSuperdiagonal(matrix);
+	checkDiagonal(matrix);
+	checkSubdiagonal(matrix);
+    }
 	
-	public static int[] processStrToInt(String[] strList) {
-		int[] intList = new int[strList.length];
-		int i = 0;
-		for (String str: strList) {
-			try {
-				intList[i] = Integer.parseInt(str);
-				i++;
-			} catch (NumberFormatException e) {
-				throw new IllegalArgumentException("Not a integer: '" + str + "' at index " + i + ", please try again.", e);
-			}
-		}
-		return intList;
+    private static int[][] randomMatrix(int size) {
+        int[][] matrix = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                matrix[i][j] = (int)Math.round(Math.random()); 
+            }
 	}
+	return matrix;
+    }
 	
-	public static int[] mergeSortedArrays(int[] list1, int[] list2) {
-		if (list1.length == 0) {
-			return list2;
-		} else if (list2.length == 0) {
-			return list1;
-		}
-		
-		int[] mergeArr = new int[list1.length + list2.length];
-		
-		int currentIndexFirst = 0;
-		int currentIndexSecond = 0;
-		int currentMergeIndex = 0;
-		while (currentIndexFirst < list1.length && currentIndexSecond < list2.length) {
-			if (list2[currentIndexSecond] > list1[currentIndexFirst]) {
-				mergeArr[currentMergeIndex++] = list1[currentIndexFirst++];
-			} else {
-				mergeArr[currentMergeIndex++] = list2[currentIndexSecond++];
-			}
-		}
-		while(currentIndexFirst < list1.length) {
-			mergeArr[currentMergeIndex++] = list1[currentIndexFirst++];
-		}
-		while (currentIndexSecond < list2.length) {
-			mergeArr[currentMergeIndex++] = list2[currentIndexSecond++];
-		}
-		
-		return mergeArr;
+    private static void printMatrix(int[][] matrix) {
+	int size = matrix.length;
+	for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+		System.out.print(matrix[i][j] + " ");
+            }
+            System.out.print("\n");
 	}
+	System.out.print("\n");
+    }
 	
-	private static void printArr(int[] list) {
-		System.out.print("The merged list is ");
-		for (int num: list) {
-			System.out.print(num + " ");
-		}
-		System.out.print("\n");
+    private static void checkRowAllSame(int[][] matrix) {
+	int size = matrix.length;
+	boolean isSame = false;
+	
+        if (size == 1) {
+            System.out.println("All " + matrix[0][0] + "s on row 0");
+            return;
 	}
+		
+	for (int row = 0; row < size; row++) {
+            boolean isAllSame = true;
+            for (int column = 0; column < size - 1; column++) {
+		if (matrix[row][column] != matrix[row][column+1]) {
+                    isAllSame = false;
+                    break;
+		}
+            }
+		if (isAllSame) {
+                    if (!isSame) isSame = true;
+			System.out.println("All " + matrix[row][0] + "s on row " + row);
+		}
+	}
+	if (!isSame) {
+            System.out.println("No same numbers on a row");
+	}
+    }
+	
+    private static void checkColumnAllSame(int[][] matrix) {
+	int size = matrix.length;
+	boolean isSame = false;
+	if (size == 1) {
+            System.out.println("All " + matrix[0][0] + "s on column 0");
+            return;
+	}
+	for (int column = 0; column < size; column++) {
+            boolean isAllSame = true;
+                for (int row = 0; row < size - 1; row++) {
+                    if (matrix[row][column] != matrix[row+1][column]) {
+			isAllSame = false;
+			break;
+                    }
+		}
+			
+		if (isAllSame) {
+                    if (!isSame) isSame = true;
+			System.out.println("All " + matrix[0][column] + "s on column " + column);
+		}
+	}
+		
+	if (!isSame) {
+            System.out.println("No same numbers on a column");
+	}
+    }
+	
+    private static void checkSuperdiagonal(int[][] matrix) {
+	int size = matrix.length;
+	if (size == 1) {
+            System.out.println("Rank one matrix doesn't have the superdiagonal");
+            return;
+	}
+	if (size == 2) {
+            System.out.println("All " + matrix[0][1] + "s on the superdiagonal");
+            return;
+	}
+	for (int row = 0; row < size-2; row++) {
+            if (matrix[row][row+1] != matrix[row+1][row+2]) {
+		System.out.println("No same numbers on the superdiagonal");
+		return;
+            }	
+	}
+		
+	System.out.println("All " + matrix[0][1] + "s on the superdiagonal");
+		
+    }
+	
+    private static void checkDiagonal(int[][] matrix) {
+	int size = matrix.length;
+	if (size == 1) {
+            System.out.println("All " + matrix[0][0] + "s on the diagonal");
+            return;
+	}
+	for (int i = 0; i < size-1; i++) {
+            if (matrix[i][i] != matrix[i+1][i+1]) {
+                System.out.println("No same numbers on the diagonal");
+                return;
+            }
+	}
+        System.out.println("All " + matrix[0][0] + "s on the diagonal");
+    }
+	
+    private static void checkSubdiagonal(int[][] matrix) {
+	int size = matrix.length;
+	if (size == 1) {
+            System.out.println("Rank one matrix doesn't have the subdiagonal");
+            return;
+	}
+	if (size == 2) {
+            System.out.println("All " + matrix[1][0] + "s on the subdiagonal");
+            return;
+	}
+	for (int row = 1; row < size-1; row++) {
+            if (matrix[row][row-1] != matrix[row+1][row]) {
+		System.out.println("No same numbers on the subdiagonal");
+		return;
+            }	
+	}
+	System.out.println("All " + matrix[1][0] + "s on the subdiagonal");
+    }	
 }
