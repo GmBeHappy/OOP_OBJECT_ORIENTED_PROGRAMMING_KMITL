@@ -30,6 +30,14 @@ public class Stock {
 	public String getName() {
             return this.name;
 	}
+        
+        public void setSymbol(String newsymbol) {
+            this.symbol = newsymbol;
+	}
+	
+	public void setName(String newname) {
+            this.name = newname;
+	}
 	
 	public double getPreviousClosingPrice() {
             return this.previousClosingPrice;

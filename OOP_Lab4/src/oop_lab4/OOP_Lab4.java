@@ -8,7 +8,7 @@ import java.math.BigInteger;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import oop_lab4.Stock;
-
+import java.util.Scanner;
 
 /**
  *
@@ -21,8 +21,8 @@ public class OOP_Lab4 {
      */
     public static void main(String[] args) {
 
-	//testStock();
-	testGregorianCalendar();
+	testStock();
+	//testGregorianCalendar();
     }
 
     // testing stock.
@@ -43,10 +43,15 @@ public class OOP_Lab4 {
 	GregorianCalendar calendar = new GregorianCalendar();
 
 	printCalendar(calendar);
+        
+        int day;
+        System.out.print("Enter day after current day : ");
+        Scanner input = new Scanner(System.in);
+        day = input.nextInt();
 
 	System.out.println("-------------");
 
-	long oneDayMillis = daysToMillis(1);
+	long oneDayMillis = daysToMillis(day);
 	calendar.setTimeInMillis((long) calendar.getTimeInMillis() + oneDayMillis);
 
 	System.out.println("After specified the elapsed time of one day after current day");
@@ -61,7 +66,7 @@ public class OOP_Lab4 {
 	System.out.printf("Day of week is %d\n", calendar.get(GregorianCalendar.DAY_OF_WEEK));
     }
 
-    private static long daysToMillis(int days) {
-	return (long) (days * 24 * 60 * 60 * 1000);
+    private static long daysToMillis(long days) {
+	return (days * 24L * 60L * 60L * 1000);
     }
 }
