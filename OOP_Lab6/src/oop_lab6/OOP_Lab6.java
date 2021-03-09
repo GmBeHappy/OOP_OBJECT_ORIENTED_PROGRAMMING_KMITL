@@ -23,7 +23,7 @@ public class OOP_Lab6 {
     public static void main(String[] args) {
         //testBMI();
         //testCourse();
-        testQueue();
+        //testQueue();
     }
     
     public static void testBMI(){
