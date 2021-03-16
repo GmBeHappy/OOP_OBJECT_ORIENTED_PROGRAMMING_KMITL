@@ -5,15 +5,121 @@
  */
 package oop_lab7;
 import java.util.Scanner;
-
+import java.util.ArrayList;
 /**
  *
  * @author Gm
  */
 public class OOP_Lab7 {
     public static void main(String[] args) {
-        testPerson();
+        testAccount();
+        //testAccount2();
+        //testPerson();
     }
+    
+    public static void testAccount(){
+        System.out.println("[1] : Saving Account");
+        System.out.println("[2] : Checking Account");
+        
+        Scanner input = new Scanner(System.in);
+        
+        int mode,id;
+        double balance,overDraft,withdraw;
+        
+        System.out.print("Select Mode : ");
+        mode = input.nextInt();
+        
+        System.out.print("Input id : ");
+        id = input.nextInt();
+        System.out.print("Input balance : ");
+        balance = input.nextDouble();
+        Account p1 = new Account(id, balance);
+        
+        switch (mode){
+            case 1:
+                SavingAccount __p1 = new SavingAccount(p1.getId(), p1.getBalance());
+                System.out.println(__p1.toString());
+                System.out.print("Id : ");
+                System.out.println(__p1.getId());
+                System.out.print("Balance : ");
+                System.out.println(__p1.getBalance());
+                System.out.print("AnnualInterestRate : ");
+                System.out.println(__p1.getAnnualInterestRate());
+                
+                System.out.print("Input withdraw : ");
+                withdraw = input.nextDouble();
+                
+                __p1.withdraw(withdraw);
+                
+                System.out.print("Id : ");
+                System.out.println(__p1.getId());
+                System.out.print("Balance : ");
+                System.out.println(__p1.getBalance());
+                System.out.print("AnnualInterestRate : ");
+                System.out.println(__p1.getAnnualInterestRate());
+                break;
+            case 2:
+                System.out.print("Input overDraft : ");
+                overDraft = input.nextDouble();
+                CheckingAccount _p1 = new CheckingAccount(overDraft, p1.getId(), p1.getBalance());
+                System.out.println(_p1.toString());
+                System.out.print("Id : ");
+                System.out.println(_p1.getId());
+                System.out.print("Balance : ");
+                System.out.println(_p1.getBalance());
+                System.out.print("AnnualInterestRate : ");
+                System.out.println(_p1.getAnnualInterestRate());
+                
+                System.out.print("Input withdraw : ");
+                withdraw = input.nextDouble();
+                _p1.withdraw(withdraw);
+                System.out.println(_p1.toString());
+                System.out.print("Id : ");
+                System.out.println(_p1.getId());
+                System.out.print("Balance : ");
+                System.out.println(_p1.getBalance());
+                System.out.print("AnnualInterestRate : ");
+                System.out.println(_p1.getAnnualInterestRate());
+                break;
+        }
+        
+    }
+    
+    public static void testAccount2(){
+        Account2 newact = new Account2("gm", 1, 5000);
+        System.out.println("Name : " + newact.getName());
+        System.out.println("Account ID : " + newact.getId());
+        System.out.println("Annual interest Rate : " + newact.getAnnualInterestRate());
+        
+        newact.deposit(30.0,"d30");
+        newact.deposit(40.0,"d40");
+        newact.deposit(50.0,"530");
+        newact.withdraw(5,"w5");
+        newact.withdraw(4,"w4");
+        newact.withdraw(10000,"w2");
+        
+        System.out.println("Name: " + newact.getName());
+        System.out.println("Account ID: " + newact.getId());
+        System.out.printf("Annual interest rate: %.2f\n", newact.getAnnualInterestRate());
+        System.out.printf("Balance: %.1f\n", newact.getBalance());
+        printTransactions(newact.getTransactions());
+        
+    }
+    
+    public static void printTransactions(ArrayList<Transaction> transactions) {
+        System.out.printf("Date\t\t\t\tType\tAmount\tBalance\n");
+
+        for (int i = 0; i < transactions.size(); i++) {
+          Transaction transaction = transactions.get(i);
+          String date = transaction.getDate().toString();
+          char type = transaction.getType();
+          double amount = transaction.getAmount();
+          double balance = transaction.getBalance();
+
+          System.out.printf("%s\t%c\t%.1f\t%.1f\n", date, type, amount, balance);
+        }
+    }
+    
     public static void testPerson(){
         
         System.out.println("[1] : Student");
