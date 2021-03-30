@@ -84,5 +84,10 @@ public class Triangle extends Geometric{
     public String toString() {
         return super.toString() + "Triangle{" + "x1=" + x1 + ", x2=" + x2 + ", x3=" + x3 + ", y1=" + y1 + ", y2=" + y2 + ", y3=" + y3 + ", side1=" + side1 + ", side2=" + side2 + ", side3=" + side3 + '}';
     }
+
+    @Override
+    public boolean equal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -45,6 +45,8 @@ public abstract class Geometric {
     public abstract double getArea();
     
     public abstract double getPerimetor();
+    
+    public abstract boolean equal();
 
     @Override
     public String toString() {

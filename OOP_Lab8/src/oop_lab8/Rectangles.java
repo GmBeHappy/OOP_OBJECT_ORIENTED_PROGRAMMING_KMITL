@@ -53,5 +53,10 @@ public class Rectangles extends Geometric{
     public String toString() {
         return super.toString() + "Rectangles{" + "width=" + width + ", height=" + height + '}';
     }
+
+    @Override
+    public boolean equal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
